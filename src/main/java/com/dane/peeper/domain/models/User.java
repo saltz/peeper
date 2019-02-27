@@ -41,6 +41,11 @@ public class User {
     public User() {
     }
 
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public void addPeep(Peep peep) {
         peeps.add(peep);
         peep.owner = this;

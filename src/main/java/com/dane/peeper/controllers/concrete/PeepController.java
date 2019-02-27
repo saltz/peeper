@@ -43,5 +43,4 @@ public class PeepController {
     public @ResponseBody HttpEntity<Peep> createPeep(@PathVariable UUID userId, @RequestBody Peep peep) {
          return new ResponseEntity<>(service.createPeep(userId, peep), HttpStatus.CREATED);
     }
-
 }
