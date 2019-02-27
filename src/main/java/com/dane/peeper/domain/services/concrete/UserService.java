@@ -1,8 +1,8 @@
-package com.dane.peeper.services.concrete;
+package com.dane.peeper.domain.services.concrete;
 
-import com.dane.peeper.models.User;
-import com.dane.peeper.repositories.interfaces.IUserRepository;
-import com.dane.peeper.services.interfaces.IUserService;
+import com.dane.peeper.domain.models.User;
+import com.dane.peeper.data.repositories.interfaces.IUserRepository;
+import com.dane.peeper.domain.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,23 +20,27 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> findAll() {
         return (List<User>) repository.findAll();
     }
 
     @Override
-    public User getUserById(UUID id) {
+    public User findById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public User createUser(User user) {
-        repository.save(user);
-        return user;
+    public User create(User object) {
+        return repository.save(object);
     }
 
     @Override
-    public void deleteUserById(UUID id) {
+    public User hardUpdate(User object) {
+        return repository.save(object);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
         repository.deleteById(id);
     }
 }
