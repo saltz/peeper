@@ -72,20 +72,4 @@ public class PeepServiceFixture {
 
         Assert.assertEquals(peep, result);
     }
-
-    @Test
-    public void hardUpdate() {
-    }
-
-    @Test
-    public void deleteById() {
-    }
-
-    @Test
-    public void findAllUserPeeps() {
-    }
-
-    @Test
-    public void createPeep() {
-    }
 }
