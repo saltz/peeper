@@ -1,6 +1,6 @@
 package com.dane.peeper.domain.services.interfaces;
 
-import com.dane.peeper.domain.models.Peep;
+import com.dane.peeper.domain.models.entities.Peep;
 
 import java.util.List;
 import java.util.UUID;

@@ -93,6 +93,7 @@
           <element id="library" level="project" name="Maven: io.springfox:springfox-swagger-ui:2.9.2" />
           <element id="library" level="project" name="Maven: io.springfox:springfox-data-rest:2.9.2" />
           <element id="library" level="project" name="Maven: org.springframework.hateoas:spring-hateoas:0.25.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.modelmapper:modelmapper:2.3.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

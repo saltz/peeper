@@ -1,7 +1,7 @@
 package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
-import com.dane.peeper.domain.models.User;
+import com.dane.peeper.domain.models.entities.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

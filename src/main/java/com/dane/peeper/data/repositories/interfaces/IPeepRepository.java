@@ -1,6 +1,6 @@
 package com.dane.peeper.data.repositories.interfaces;
 
-import com.dane.peeper.domain.models.Peep;
+import com.dane.peeper.domain.models.entities.Peep;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 

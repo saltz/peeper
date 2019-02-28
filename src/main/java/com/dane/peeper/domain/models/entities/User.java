@@ -1,6 +1,5 @@
-package com.dane.peeper.domain.models;
+package com.dane.peeper.domain.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -11,10 +10,6 @@ import java.util.UUID;
 
 @Entity
 @Data
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +34,11 @@ public class User {
     public List<User> following;
 
     public User() {
+    }
+
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public void addPeep(Peep peep) {
