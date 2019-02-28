@@ -1,4 +1,4 @@
-package com.dane.peeper.domain.models;
+package com.dane.peeper.domain.models.entities;
 
 public enum UserRole {
     USER,

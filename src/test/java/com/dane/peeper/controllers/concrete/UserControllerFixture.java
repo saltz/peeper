@@ -2,7 +2,7 @@ package com.dane.peeper.controllers.concrete;
 
 import com.dane.peeper.controllers.concrete.clients.UsersServiceClient;
 import com.dane.peeper.controllers.concrete.wrappers.UserCollection;
-import com.dane.peeper.domain.models.User;
+import com.dane.peeper.domain.models.entities.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;

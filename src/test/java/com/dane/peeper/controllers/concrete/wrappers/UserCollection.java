@@ -1,6 +1,6 @@
 package com.dane.peeper.controllers.concrete.wrappers;
 
-import com.dane.peeper.domain.models.User;
+import com.dane.peeper.domain.models.entities.User;
 
 import java.util.List;
 

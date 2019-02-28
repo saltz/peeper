@@ -1,4 +1,4 @@
-package com.dane.peeper.swagger;
+package com.dane.peeper.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

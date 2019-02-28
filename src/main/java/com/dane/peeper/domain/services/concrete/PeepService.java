@@ -2,8 +2,8 @@ package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IPeepRepository;
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
-import com.dane.peeper.domain.models.Peep;
-import com.dane.peeper.domain.models.User;
+import com.dane.peeper.domain.models.entities.Peep;
+import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.services.interfaces.IPeepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,6 @@ public class PeepService implements IPeepService {
         this.peepRepository = peepRepository;
         this.userRepository = userRepository;
     }
-
 
     @Override
     public List<Peep> findAll() {
