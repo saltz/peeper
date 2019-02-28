@@ -65,8 +65,8 @@ public class PeepService implements IPeepService {
         }
         user.addPeep(peep);
 
-        userRepository.save(user);
+        user = userRepository.save(user);
 
-        return peep;
+        return user.peeps.get(user.peeps.size() - 1);
     }
 }
