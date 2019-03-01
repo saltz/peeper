@@ -12,14 +12,14 @@ public interface IBaseService<C> {
      * Find all of type
      * @return collection of type
      */
-    List<C> findAll();
+    Iterable<C> findAll();
 
     /**
      * Find type by id
      * @param id uuid of the type
      * @return single of type
      */
-    C findById(UUID id);
+    C findById(UUID id) throws Exception;
 
     /**
      * Save instance of type

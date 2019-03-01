@@ -40,7 +40,7 @@ public class PeepServiceFixture {
 
         when(peepRepository.findAll()).thenReturn(peeps);
 
-        List<Peep> result = service.findAll();
+        List<Peep> result = (List<Peep>) service.findAll();
 
         Assert.assertEquals(peeps, result);
         Assert.assertNotEquals(0, result.size());
@@ -48,7 +48,7 @@ public class PeepServiceFixture {
     }
 
     @Test
-    public void findById() {
+    public void findById() throws Exception {
         Peep peep = createFakePeep(UUID.randomUUID());
 
         when(peepRepository.findById(peep.id)).thenReturn(Optional.of(peep));
@@ -59,7 +59,7 @@ public class PeepServiceFixture {
     }
 
     @Test
-    public void create() {
+    public void create() throws Exception {
         User user = new User();
         user.id = UUID.randomUUID();
         user.peeps = new ArrayList<>();

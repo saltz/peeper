@@ -1,12 +1,13 @@
 package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
+import com.dane.peeper.domain.exceptions.InvalidRelationException;
+import com.dane.peeper.domain.exceptions.UserNotFoundException;
 import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -20,13 +21,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return (List<User>) repository.findAll();
+    public Iterable<User> findAll() {
+        return repository.findAll();
     }
 
     @Override
-    public User findById(UUID id) {
-        return repository.findById(id).orElse(null);
+    public User findById(UUID id) throws Exception {
+        return repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
     }
 
     @Override
@@ -45,24 +46,24 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getFollowers(UUID id) {
-        User user = repository.findById(id).orElse(null);
+    public Iterable<User> getFollowers(UUID id) throws Exception {
+        User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.followers;
     }
 
     @Override
-    public List<User> getFollowing(UUID id) {
-        User user = repository.findById(id).orElse(null);
+    public Iterable<User> getFollowing(UUID id) throws Exception {
+        User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.following;
     }
 
     @Override
-    public User followUser(UUID id, UUID followId) {
+    public User followUser(UUID id, UUID followId) throws Exception {
         if (id.equals(followId)) {
-            return null;
+            throw new InvalidRelationException("It is not possible to follow yourself");
         }
 
-        User user = repository.findById(id).orElse(null);
+        User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         User userToFollow = repository.findById(followId).orElse(null);
 
         user.followers.add(userToFollow);
@@ -71,9 +72,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void unFollowUser(UUID userId, UUID followId) {
-        User user = repository.findById(userId).orElse(null);
-        user.followers.remove(user.followers.stream().filter(u -> u.id.equals(followId)).findFirst().orElse(null));
+    public void unFollowUser(UUID userId, UUID followId) throws Exception {
+        User user = repository.findById(userId).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
+        user.followers.remove(user.followers.stream().filter(u -> u.id.equals(followId)).findFirst().orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied follow id"))));
         repository.save(user);
     }
 }

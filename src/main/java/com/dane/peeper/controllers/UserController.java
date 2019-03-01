@@ -30,14 +30,14 @@ public class UserController {
 
     @GetMapping(produces = "application/json")
     public @ResponseBody
-    HttpEntity<List<UserViewModel>> getAll() {
-        List<UserViewModel> response = mapper.map(service.findAll(), new TypeToken<List<UserViewModel>>() {}.getType());
+    HttpEntity<Iterable<UserViewModel>> getAll() {
+        Iterable<UserViewModel> response = mapper.map(service.findAll(), new TypeToken<Iterable<UserViewModel>>() {}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}", produces = "application/json")
     public @ResponseBody
-    HttpEntity<UserViewModel> getById(@PathVariable UUID id) {
+    HttpEntity<UserViewModel> getById(@PathVariable UUID id) throws Exception {
         return new ResponseEntity<>(mapper.map(service.findById(id), UserViewModel.class), HttpStatus.OK);
     }
 
@@ -62,27 +62,27 @@ public class UserController {
 
     @GetMapping(path = "{id}/followers", produces = "application/json")
     public @ResponseBody
-    HttpEntity<List<UserViewModel>> getFollowers(@PathVariable UUID id) {
-        List<UserViewModel> response = mapper.map(service.getFollowers(id), new TypeToken<List<UserViewModel>>() {}.getType());
+    HttpEntity<Iterable<UserViewModel>> getFollowers(@PathVariable UUID id) throws Exception {
+        Iterable<UserViewModel> response = mapper.map(service.getFollowers(id), new TypeToken<Iterable<UserViewModel>>() {}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}/following", produces = "application/json")
     public @ResponseBody
-    HttpEntity<List<UserViewModel>> getFollowing(@PathVariable UUID id) {
-        List<UserViewModel> response = mapper.map(service.getFollowing(id), new TypeToken<List<UserViewModel>>() {}.getType());
+    HttpEntity<Iterable<UserViewModel>> getFollowing(@PathVariable UUID id) throws Exception {
+        Iterable<UserViewModel> response = mapper.map(service.getFollowing(id), new TypeToken<Iterable<UserViewModel>>() {}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(path = "{id}/following/{followId}", produces = "application/json")
     public @ResponseBody
-    HttpEntity<UserViewModel> followUser(@PathVariable UUID id, @PathVariable UUID followId) {
+    HttpEntity<UserViewModel> followUser(@PathVariable UUID id, @PathVariable UUID followId) throws Exception {
         return new ResponseEntity<>(mapper.map(service.followUser(id, followId), UserViewModel.class), HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "{id}/following{followId}")
+    @DeleteMapping(path = "{id}/following/{followId}")
     public @ResponseBody
-    HttpEntity unFollowUser(@PathVariable UUID id, @PathVariable UUID followId) {
+    HttpEntity unFollowUser(@PathVariable UUID id, @PathVariable UUID followId) throws Exception {
         service.unFollowUser(id,followId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

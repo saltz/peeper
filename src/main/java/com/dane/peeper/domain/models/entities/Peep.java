@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,10 +18,12 @@ public class Peep {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     public User owner;
-    @OneToMany
-    public List<User> likes;
-    @OneToMany
-    public List<User> reporters;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "like_user_id")
+    public Set<User> likes;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reporter_user_id")
+    public Set<User> reporters;
 
     public Peep() {}
 

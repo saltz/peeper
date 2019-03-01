@@ -1,11 +1,10 @@
 package com.dane.peeper.domain.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -26,12 +25,14 @@ public class User {
 
     @OneToOne
     public Address address;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true, fetch = FetchType.LAZY)
     public List<Peep> peeps;
-    @ManyToMany
-    public List<User> followers;
-    @ManyToMany
-    public List<User> following;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "follower_id")
+    public Set<User> followers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "following_id")
+    public Set<User> following;
 
     public User() {
     }

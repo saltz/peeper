@@ -29,14 +29,14 @@ public class PeepController {
 
     @GetMapping(path = "peeps", produces = "application/json")
     public @ResponseBody
-    HttpEntity<List<PeepViewModel>> getAll() {
-        List<PeepViewModel> response = mapper.map(service.findAll(), new TypeToken<List<PeepViewModel>>(){}.getType());
+    HttpEntity<Iterable<PeepViewModel>> getAll() {
+        Iterable<PeepViewModel> response = mapper.map(service.findAll(), new TypeToken<Iterable<PeepViewModel>>(){}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "peeps/{id}", produces = "application/json")
     public @ResponseBody
-    HttpEntity<PeepViewModel> getById(@PathVariable UUID id) {
+    HttpEntity<PeepViewModel> getById(@PathVariable UUID id) throws Exception {
         return new ResponseEntity<>(mapper.map(service.findById(id), PeepViewModel.class), HttpStatus.OK);
     }
 
@@ -47,15 +47,28 @@ public class PeepController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PostMapping(path = "peeps/{peepId}/like/{userId}")
+    public @ResponseBody
+    HttpEntity<PeepViewModel> likePeep(@PathVariable UUID peepId, @PathVariable UUID userId) throws Exception {
+        return new ResponseEntity<>(mapper.map(service.likePeep(peepId, userId), PeepViewModel.class), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "peeps/{peepId}/like/{userId}")
+    public @ResponseBody
+    HttpEntity unLikePeep(@PathVariable UUID peepId, @PathVariable UUID userId) throws Exception {
+        service.unLikePeep(peepId, userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping(path = "users/{userId}/peeps", produces = "application/json")
     public @ResponseBody
-    HttpEntity<List<PeepViewModel>> getAllUserPeeps(@PathVariable UUID userId) {
-        List<PeepViewModel> response = mapper.map(service.findAllUserPeeps(userId), new TypeToken<List<PeepViewModel>>(){}.getType());
+    HttpEntity<Iterable<PeepViewModel>> getAllUserPeeps(@PathVariable UUID userId) throws Exception {
+        Iterable<PeepViewModel> response = mapper.map(service.findAllUserPeeps(userId), new TypeToken<Iterable<PeepViewModel>>(){}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(path = "users/{userId}/peeps", produces = "application/json", consumes = "application/json")
-    public @ResponseBody HttpEntity<PeepViewModel> createPeep(@PathVariable UUID userId, @RequestBody PeepRequestModel peep) {
+    public @ResponseBody HttpEntity<PeepViewModel> createPeep(@PathVariable UUID userId, @RequestBody PeepRequestModel peep) throws Exception {
          return new ResponseEntity<>(mapper.map(service.createPeep(userId, mapper.map(peep, Peep.class)), PeepViewModel.class), HttpStatus.CREATED);
     }
 }

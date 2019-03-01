@@ -42,7 +42,7 @@ public class UserServiceFixture {
 
         when(repository.findAll()).thenReturn(users);
 
-        List<User> result = service.findAll();
+        List<User> result = (List<User>) service.findAll();
 
         Assert.assertEquals(users, result);
         Assert.assertNotEquals(0, result.size());
@@ -50,7 +50,7 @@ public class UserServiceFixture {
     }
 
     @Test
-    public void findById() {
+    public void findById() throws Exception {
         User user = createFakeUser(UUID.randomUUID());
 
         when(repository.findById(user.id)).thenReturn(Optional.of(user));
