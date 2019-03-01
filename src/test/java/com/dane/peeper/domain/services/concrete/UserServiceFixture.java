@@ -1,6 +1,7 @@
 package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
+import com.dane.peeper.domain.exceptions.InvalidRelationException;
 import com.dane.peeper.domain.models.entities.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +11,7 @@ import org.mockito.Mock;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -23,7 +24,7 @@ public class UserServiceFixture {
     private IUserRepository repository;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         initMocks(this);
     }
 
@@ -34,7 +35,6 @@ public class UserServiceFixture {
         user.lastName = "test";
         return user;
     }
-
 
     @Test
     public void findAll() {
@@ -69,5 +69,31 @@ public class UserServiceFixture {
         User result = service.create(user);
 
         assertEquals(user, result);
+    }
+
+    @Test
+    public void followUser() throws Exception {
+        User firstUser = createFakeUser(UUID.randomUUID());
+        User secondUser = createFakeUser(UUID.randomUUID());
+        firstUser.following = new HashSet<>();
+
+        when(repository.findById(firstUser.id)).thenReturn(Optional.of(firstUser));
+        when(repository.findById(secondUser.id)).thenReturn(Optional.of(secondUser));
+        when(repository.save(firstUser)).thenReturn(firstUser);
+
+        User result = service.followUser(firstUser.id, secondUser.id);
+
+        Assert.assertEquals(secondUser, result);
+    }
+
+    @Test
+    public void followUrSelf() {
+        User user = createFakeUser(UUID.randomUUID());
+
+        try {
+            service.followUser(user.id, user.id);
+        } catch (Exception e) {
+            Assert.assertEquals( "it is not possible to follow yourself", e.getMessage());
+        }
     }
 }

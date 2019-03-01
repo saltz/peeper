@@ -60,13 +60,13 @@ public class UserService implements IUserService {
     @Override
     public User followUser(UUID id, UUID followId) throws Exception {
         if (id.equals(followId)) {
-            throw new InvalidRelationException("It is not possible to follow yourself");
+            throw new InvalidRelationException("it is not possible to follow yourself");
         }
 
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         User userToFollow = repository.findById(followId).orElse(null);
 
-        user.followers.add(userToFollow);
+        user.following.add(userToFollow);
         repository.save(user);
         return userToFollow;
     }
@@ -74,7 +74,7 @@ public class UserService implements IUserService {
     @Override
     public void unFollowUser(UUID userId, UUID followId) throws Exception {
         User user = repository.findById(userId).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
-        user.followers.remove(user.followers.stream().filter(u -> u.id.equals(followId)).findFirst().orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied follow id"))));
+        user.following.remove(user.followers.stream().filter(u -> u.id.equals(followId)).findFirst().orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied follow id"))));
         repository.save(user);
     }
 }
