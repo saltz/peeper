@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
-public class UserControllerFixture {
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -49,8 +49,7 @@ public class UserControllerFixture {
         given(service.findAll()).willReturn(users);
 
         mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("users"));
+                .andExpect(status().isOk());
     }
 
 }
