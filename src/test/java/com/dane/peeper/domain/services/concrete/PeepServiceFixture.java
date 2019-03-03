@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.junit.Assert;
 import java.util.*;
+
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -52,21 +54,6 @@ public class PeepServiceFixture {
         when(peepRepository.findById(peep.id)).thenReturn(Optional.of(peep));
 
         Peep result = service.findById(peep.id);
-
-        Assert.assertEquals(peep, result);
-    }
-
-    @Test
-    public void create() throws Exception {
-        User user = new User();
-        user.id = UUID.randomUUID();
-        user.peeps = new ArrayList<>();
-        Peep peep = ModelUtilities.createFakePeep(UUID.randomUUID());
-
-        when(userRepository.findById(user.id)).thenReturn(Optional.of(user));
-        when(peepRepository.save(peep)).thenReturn(peep);
-
-        Peep result = service.createPeep(user.id, peep);
 
         Assert.assertEquals(peep, result);
     }

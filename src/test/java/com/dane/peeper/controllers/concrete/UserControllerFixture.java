@@ -49,8 +49,7 @@ public class UserControllerFixture {
         given(service.findAll()).willReturn(users);
 
         mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("users"));
+                .andExpect(status().isOk());
     }
 
 }
