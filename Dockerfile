@@ -1,7 +1,11 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG DEPENDENCY=target/dependency
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","package com.dane.peeper.PeeperApplication"]
+FROM maven:3.6.0-jdk-8-alpine AS build
+WORKDIR /opt
+COPY src/ ./
+COPY pom.xml ./
+RUN mvn clean
+RUN mvn package
+
+FROM openjdk:8-jdk-alpine AS release
+WORKDIR /app
+COPY --from=build /opt/target/*.jar ./peeper.jar
+ENTRYPOINT ["java","-jar","peeper.jar"]
