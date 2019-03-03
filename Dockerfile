@@ -5,7 +5,7 @@ COPY pom.xml ./
 RUN mvn clean
 RUN mvn package
 
-FROM openjdk:8-jdk-alpine AS release
+FROM openjdk:8-jdk-alpine
 WORKDIR /app
 COPY --from=build /opt/target/*.jar ./peeper.jar
 ENTRYPOINT ["java","-jar","peeper.jar"]
