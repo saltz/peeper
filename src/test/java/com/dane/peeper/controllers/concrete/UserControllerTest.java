@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
-public class UserControllerFixture {
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;

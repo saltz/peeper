@@ -3,20 +3,19 @@ package com.dane.peeper.domain.services.concrete;
 import com.dane.peeper.data.repositories.interfaces.IPeepRepository;
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
 import com.dane.peeper.domain.models.entities.Peep;
-import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.utils.ModelUtilities;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.junit.Assert;
+
 import java.util.*;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class PeepServiceFixture {
+public class peepServiceTest {
 
     @InjectMocks
     private PeepService service;
