@@ -1,17 +1,15 @@
 package com.dane.peeper.domain.models.viewModels;
 
 import com.dane.peeper.domain.models.entities.UserRole;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.UUID;
 
 @Data
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class UserViewModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
     public String alias;
     public String firstName;

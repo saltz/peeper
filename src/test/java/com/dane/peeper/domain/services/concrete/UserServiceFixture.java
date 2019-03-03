@@ -3,6 +3,7 @@ package com.dane.peeper.domain.services.concrete;
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
 import com.dane.peeper.domain.exceptions.InvalidRelationException;
 import com.dane.peeper.domain.models.entities.User;
+import com.dane.peeper.utils.ModelUtilities;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,17 +29,9 @@ public class UserServiceFixture {
         initMocks(this);
     }
 
-    private User createFakeUser(UUID id) {
-        User user = new User();
-        user.id = id;
-        user.firstName = "test";
-        user.lastName = "test";
-        return user;
-    }
-
     @Test
     public void findAll() {
-        List<User> users = new ArrayList<>(Arrays.asList(createFakeUser(UUID.randomUUID()), createFakeUser(UUID.randomUUID())));
+        List<User> users = new ArrayList<>(Arrays.asList(ModelUtilities.createFakeUser(UUID.randomUUID()), ModelUtilities.createFakeUser(UUID.randomUUID())));
 
         when(repository.findAll()).thenReturn(users);
 
@@ -51,7 +44,7 @@ public class UserServiceFixture {
 
     @Test
     public void findById() throws Exception {
-        User user = createFakeUser(UUID.randomUUID());
+        User user = ModelUtilities.createFakeUser(UUID.randomUUID());
 
         when(repository.findById(user.id)).thenReturn(Optional.of(user));
 
@@ -62,7 +55,7 @@ public class UserServiceFixture {
 
     @Test
     public void create() {
-        User user = createFakeUser(UUID.randomUUID());
+        User user = ModelUtilities.createFakeUser(UUID.randomUUID());
 
         when(repository.save(user)).thenReturn(user);
 
@@ -73,8 +66,8 @@ public class UserServiceFixture {
 
     @Test
     public void followUser() throws Exception {
-        User firstUser = createFakeUser(UUID.randomUUID());
-        User secondUser = createFakeUser(UUID.randomUUID());
+        User firstUser = ModelUtilities.createFakeUser(UUID.randomUUID());
+        User secondUser = ModelUtilities.createFakeUser(UUID.randomUUID());
         firstUser.following = new HashSet<>();
 
         when(repository.findById(firstUser.id)).thenReturn(Optional.of(firstUser));
@@ -88,7 +81,7 @@ public class UserServiceFixture {
 
     @Test
     public void followUrSelf() {
-        User user = createFakeUser(UUID.randomUUID());
+        User user = ModelUtilities.createFakeUser(UUID.randomUUID());
 
         try {
             service.followUser(user.id, user.id);
