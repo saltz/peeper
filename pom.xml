@@ -10,17 +10,14 @@
     </parent>
     <groupId>com.dane</groupId>
     <artifactId>peeper</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>peeper</name>
-    <description>Demo project for Spring Boot</description>
+    <description>The better twitter spin off</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <start-class>com.dane.peeper.PeeperApplication</start-class>
     </properties>
-
-    <packaging>
-        war
-    </packaging>
 
     <dependencies>
         <dependency>
@@ -77,6 +74,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
             </plugin>
         </plugins>
     </build>
