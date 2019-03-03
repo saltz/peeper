@@ -1,9 +1,8 @@
 FROM maven:3.6.0-jdk-8-alpine AS build
 WORKDIR /opt
-COPY src/ ./
+COPY src/ ./src
 COPY pom.xml ./
-RUN mvn clean
-RUN mvn package
+RUN mvn clean package
 
 FROM openjdk:8-jdk-alpine
 WORKDIR /app

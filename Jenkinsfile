@@ -5,11 +5,11 @@ node('maven') {
     branch = env.BRANCH_NAME
   }
 
-  stage('Maven build') {
+  stage('Maven build and package') {
     sh "mvn -B -V -U -e clean package"
   }
 
-  stage('Test and archive') {
+  stage('Record test results') {
     junit testResults: '**/target/**/TEST*.xml'
   }
 
