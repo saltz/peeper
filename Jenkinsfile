@@ -5,6 +5,11 @@ node('maven') {
     branch = env.BRANCH_NAME
   }
 
+  stage('Tag build') {
+    def pom = readMavenPom file: 'pom.xml'
+    currentBuild.displayName = 'peeper-' + pom.version
+  }
+
   stage('Maven build and package') {
     sh "mvn -B -V -U -e clean package"
   }
