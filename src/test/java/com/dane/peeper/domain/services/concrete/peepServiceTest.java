@@ -39,7 +39,7 @@ public class peepServiceTest {
 
         when(peepRepository.findAll()).thenReturn(peeps);
 
-        List<Peep> result = (List<Peep>) service.findAll();
+        List<Peep> result = service.findAll();
 
         Assert.assertEquals(peeps, result);
         Assert.assertNotEquals(0, result.size());

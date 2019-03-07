@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,8 +27,8 @@ public class PeepService implements IPeepService {
     }
 
     @Override
-    public Iterable<Peep> findAll() {
-        return peepRepository.findAll();
+    public List<Peep> findAll() {
+        return (List<Peep>) peepRepository.findAll();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class PeepService implements IPeepService {
     }
 
     @Override
-    public Iterable<Peep> findAllUserPeeps(UUID userId) throws Exception {
+    public List<Peep> findAllUserPeeps(UUID userId) throws Exception {
         User user =  userRepository.findById(userId).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.peeps;
     }
