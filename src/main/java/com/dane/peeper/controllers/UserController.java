@@ -10,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -30,7 +34,7 @@ public class UserController {
     @GetMapping(produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<UserViewModel>> getAll() {
-        Iterable<UserViewModel> response = mapper.map(service.findAll(), new TypeToken<Iterable<UserViewModel>>() {}.getType());
+        List<UserViewModel> response = mapper.map(service.findAll(), new TypeToken<List<UserViewModel>>(){}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -42,13 +46,19 @@ public class UserController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     public @ResponseBody
-    HttpEntity<UserViewModel> create(@RequestBody UserRequestModel user) {
+    HttpEntity create(@RequestBody @Valid UserRequestModel user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(mapper.map(service.create(mapper.map(user, User.class)), UserViewModel.class), HttpStatus.CREATED);
     }
 
     @PutMapping(produces = "application/json", consumes = "application/json")
     public @ResponseBody
-    HttpEntity<UserViewModel> hardUpdate(@RequestBody UserRequestModel user) {
+    HttpEntity hardUpdate(@RequestBody @Valid UserRequestModel user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(mapper.map(service.create(mapper.map(user, User.class)), UserViewModel.class), HttpStatus.OK);
     }
 
@@ -56,20 +66,22 @@ public class UserController {
     @DeleteMapping(path = "{id}")
     public HttpEntity deleteById(@PathVariable UUID id) {
         service.deleteById(id);
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(path = "{id}/followers", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<UserViewModel>> getFollowers(@PathVariable UUID id) throws Exception {
-        Iterable<UserViewModel> response = mapper.map(service.getFollowers(id), new TypeToken<Iterable<UserViewModel>>() {}.getType());
+        Set<UserViewModel> response = mapper.map(service.getFollowers(id), new TypeToken<Set<UserViewModel>>() {
+        }.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}/following", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<UserViewModel>> getFollowing(@PathVariable UUID id) throws Exception {
-        Iterable<UserViewModel> response = mapper.map(service.getFollowing(id), new TypeToken<Iterable<UserViewModel>>() {}.getType());
+        Set<UserViewModel> response = mapper.map(service.getFollowing(id), new TypeToken<Set<UserViewModel>>() {
+        }.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -82,7 +94,7 @@ public class UserController {
     @DeleteMapping(path = "{id}/following/{followId}")
     public @ResponseBody
     HttpEntity unFollowUser(@PathVariable UUID id, @PathVariable UUID followId) throws Exception {
-        service.unFollowUser(id,followId);
+        service.unFollowUser(id, followId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

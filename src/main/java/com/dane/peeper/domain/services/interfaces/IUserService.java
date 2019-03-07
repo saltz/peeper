@@ -2,6 +2,8 @@ package com.dane.peeper.domain.services.interfaces;
 
 import com.dane.peeper.domain.models.entities.User;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -15,7 +17,7 @@ public interface IUserService extends IBaseService<User> {
      * @return Collection of users
      * @throws Exception if the user is not found
      */
-    Iterable<User> getFollowers(UUID id) throws Exception;
+    Set<User> getFollowers(UUID id) throws Exception;
 
     /**
      * Get all following from a user
@@ -24,7 +26,7 @@ public interface IUserService extends IBaseService<User> {
      * @return Collection of users
      * @throws Exception if the user is not found
      */
-    Iterable<User> getFollowing(UUID id) throws Exception;
+    Set<User> getFollowing(UUID id) throws Exception;
 
     /**
      * Follow a user

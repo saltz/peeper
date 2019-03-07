@@ -2,6 +2,7 @@ package com.dane.peeper.domain.services.interfaces;
 
 import com.dane.peeper.domain.models.entities.Peep;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,7 +14,7 @@ public interface IPeepService extends IBaseService<Peep> {
      * @param userId the uuid of the user
      * @return collection of peeps
      */
-    Iterable<Peep> findAllUserPeeps(UUID userId) throws Exception;
+    List<Peep> findAllUserPeeps(UUID userId) throws Exception;
 
     /**
      * Create a peep linked to a user

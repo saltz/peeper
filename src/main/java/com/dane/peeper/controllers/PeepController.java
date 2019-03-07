@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +32,8 @@ public class PeepController {
     @GetMapping(path = "peeps", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<PeepViewModel>> getAll() {
-        Iterable<PeepViewModel> response = mapper.map(service.findAll(), new TypeToken<Iterable<PeepViewModel>>(){}.getType());
+        List<PeepViewModel> response = mapper.map(service.findAll(), new TypeToken<List<PeepViewModel>>() {
+        }.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -63,12 +66,17 @@ public class PeepController {
     @GetMapping(path = "users/{userId}/peeps", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<PeepViewModel>> getAllUserPeeps(@PathVariable UUID userId) throws Exception {
-        Iterable<PeepViewModel> response = mapper.map(service.findAllUserPeeps(userId), new TypeToken<Iterable<PeepViewModel>>(){}.getType());
+        List<PeepViewModel> response = mapper.map(service.findAllUserPeeps(userId), new TypeToken<List<PeepViewModel>>() {
+        }.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(path = "users/{userId}/peeps", produces = "application/json", consumes = "application/json")
-    public @ResponseBody HttpEntity<PeepViewModel> createPeep(@PathVariable UUID userId, @RequestBody PeepRequestModel peep) throws Exception {
-         return new ResponseEntity<>(mapper.map(service.createPeep(userId, mapper.map(peep, Peep.class)), PeepViewModel.class), HttpStatus.CREATED);
+    public @ResponseBody
+    HttpEntity createPeep(@PathVariable UUID userId, @RequestBody @Valid PeepRequestModel peep, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(mapper.map(service.createPeep(userId, mapper.map(peep, Peep.class)), PeepViewModel.class), HttpStatus.CREATED);
     }
 }

@@ -15,7 +15,6 @@ public class UserViewModel {
     public String firstName;
     public String lastName;
     public String email;
-    public String hash;
     public String biography;
     public String website;
     public Byte[] picture;

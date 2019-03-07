@@ -8,6 +8,8 @@ import com.dane.peeper.domain.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -21,8 +23,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Iterable<User> findAll() {
-        return repository.findAll();
+    public List<User> findAll() {
+        return (List<User>) repository.findAll();
     }
 
     @Override
@@ -46,13 +48,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Iterable<User> getFollowers(UUID id) throws Exception {
+    public Set<User> getFollowers(UUID id) throws Exception {
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.followers;
     }
 
     @Override
-    public Iterable<User> getFollowing(UUID id) throws Exception {
+    public Set<User> getFollowing(UUID id) throws Exception {
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.following;
     }

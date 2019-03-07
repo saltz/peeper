@@ -12,7 +12,7 @@ public interface IBaseService<C> {
      * Find all of type
      * @return collection of type
      */
-    Iterable<C> findAll();
+    List<C> findAll();
 
     /**
      * Find type by id

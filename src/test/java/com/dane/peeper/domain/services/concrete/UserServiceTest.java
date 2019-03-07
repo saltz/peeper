@@ -35,7 +35,7 @@ public class UserServiceTest {
 
         when(repository.findAll()).thenReturn(users);
 
-        List<User> result = (List<User>) service.findAll();
+        List<User> result = service.findAll();
 
         Assert.assertEquals(users, result);
         Assert.assertNotEquals(0, result.size());
