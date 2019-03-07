@@ -15,14 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.*;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -44,7 +41,7 @@ public class UserControllerTest {
 
     @Test
     public void getAllUsers() throws Exception{
-        Iterable<User> users = new ArrayList<>(Arrays.asList(ModelUtilities.createFakeUser(UUID.randomUUID()), ModelUtilities.createFakeUser(UUID.randomUUID())));
+        List<User> users = new ArrayList<>(Arrays.asList(ModelUtilities.createFakeUser(UUID.randomUUID()), ModelUtilities.createFakeUser(UUID.randomUUID())));
 
         given(service.findAll()).willReturn(users);
 
