@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dane</groupId>
     <artifactId>peeper</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.2-tagging</version>
     <name>peeper</name>
     <description>The better twitter spin off</description>
     <packaging>jar</packaging>
