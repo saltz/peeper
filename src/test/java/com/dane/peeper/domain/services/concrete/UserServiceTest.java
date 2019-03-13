@@ -68,7 +68,7 @@ public class UserServiceTest {
     public void followUser() throws Exception {
         User firstUser = ModelUtilities.createFakeUser(UUID.randomUUID());
         User secondUser = ModelUtilities.createFakeUser(UUID.randomUUID());
-        firstUser.following = new HashSet<>();
+        firstUser.following = new ArrayList<>();
 
         when(repository.findById(firstUser.id)).thenReturn(Optional.of(firstUser));
         when(repository.findById(secondUser.id)).thenReturn(Optional.of(secondUser));

@@ -1,5 +1,6 @@
 package com.dane.peeper.controllers;
 
+import com.dane.peeper.domain.extensions.BindingResultExtension;
 import com.dane.peeper.domain.models.entities.Peep;
 import com.dane.peeper.domain.models.requestModels.PeepRequestModel;
 import com.dane.peeper.domain.models.viewModels.PeepViewModel;
@@ -75,7 +76,7 @@ public class PeepController {
     public @ResponseBody
     HttpEntity createPeep(@PathVariable UUID userId, @RequestBody @Valid PeepRequestModel peep, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(BindingResultExtension.returnBindingErrorMessages(bindingResult), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(mapper.map(service.createPeep(userId, mapper.map(peep, Peep.class)), PeepViewModel.class), HttpStatus.CREATED);
     }

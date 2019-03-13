@@ -61,12 +61,11 @@ public class PeepService implements IPeepService {
     @Override
     public Peep createPeep(UUID userId, Peep peep) throws UserNotFoundException {
         peep.date = Calendar.getInstance().getTime();
+        peep.owner = userRepository.findById(userId).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
 
-        User user = userRepository.findById(userId).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
-        user.addPeep(peep);
-        user = userRepository.save(user);
+        peepRepository.save(peep);
 
-        return user.peeps.get(user.peeps.size() - 1);
+        return peep;
     }
 
     @Override
