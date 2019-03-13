@@ -2,6 +2,7 @@ package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
 import com.dane.peeper.domain.exceptions.InvalidRelationException;
+import com.dane.peeper.domain.exceptions.UserFollowException;
 import com.dane.peeper.domain.exceptions.UserNotFoundException;
 import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.services.interfaces.IUserService;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -48,13 +48,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Set<User> getFollowers(UUID id) throws Exception {
+    public List<User> getFollowers(UUID id) throws Exception {
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.followers;
     }
 
     @Override
-    public Set<User> getFollowing(UUID id) throws Exception {
+    public List<User> getFollowing(UUID id) throws Exception {
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.following;
     }
@@ -66,10 +66,15 @@ public class UserService implements IUserService {
         }
 
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
-        User userToFollow = repository.findById(followId).orElse(null);
+        User userToFollow = repository.findById(followId).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied followId")));
+
+        if (user.following.contains(userToFollow)) {
+            throw new UserFollowException("you're already following this user");
+        }
 
         user.following.add(userToFollow);
         repository.save(user);
+
         return userToFollow;
     }
 

@@ -1,5 +1,6 @@
 package com.dane.peeper.controllers;
 
+import com.dane.peeper.domain.extensions.BindingResultExtension;
 import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.models.requestModels.UserRequestModel;
 import com.dane.peeper.domain.models.viewModels.UserViewModel;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -48,7 +48,7 @@ public class UserController {
     public @ResponseBody
     HttpEntity create(@RequestBody @Valid UserRequestModel user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(BindingResultExtension.returnBindingErrorMessages(bindingResult), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(mapper.map(service.create(mapper.map(user, User.class)), UserViewModel.class), HttpStatus.CREATED);
     }
@@ -57,7 +57,7 @@ public class UserController {
     public @ResponseBody
     HttpEntity hardUpdate(@RequestBody @Valid UserRequestModel user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(BindingResultExtension.returnBindingErrorMessages(bindingResult), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(mapper.map(service.create(mapper.map(user, User.class)), UserViewModel.class), HttpStatus.OK);
     }
@@ -72,16 +72,14 @@ public class UserController {
     @GetMapping(path = "{id}/followers", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<UserViewModel>> getFollowers(@PathVariable UUID id) throws Exception {
-        Set<UserViewModel> response = mapper.map(service.getFollowers(id), new TypeToken<Set<UserViewModel>>() {
-        }.getType());
+        List<UserViewModel> response = mapper.map(service.getFollowers(id), new TypeToken<List<UserViewModel>>(){}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}/following", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<UserViewModel>> getFollowing(@PathVariable UUID id) throws Exception {
-        Set<UserViewModel> response = mapper.map(service.getFollowing(id), new TypeToken<Set<UserViewModel>>() {
-        }.getType());
+        List<UserViewModel> response = mapper.map(service.getFollowing(id), new TypeToken<List<UserViewModel>>() {}.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

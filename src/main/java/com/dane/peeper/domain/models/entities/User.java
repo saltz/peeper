@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,14 +24,15 @@ public class User {
 
     @OneToOne
     public Address address;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true, fetch = FetchType.LAZY)
     public List<Peep> peeps;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "following")
+    public List<User> followers;
+
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_id")
-    public Set<User> followers;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "following_id")
-    public Set<User> following;
+    public List<User> following;
 
     public User() {
     }
@@ -40,15 +40,5 @@ public class User {
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public void addPeep(Peep peep) {
-        peeps.add(peep);
-        peep.owner = this;
-    }
-
-    public void removePeep(Peep peep) {
-        peeps.remove(peep);
-        peep.owner = null;
     }
 }

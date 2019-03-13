@@ -1,10 +1,11 @@
 package com.dane.peeper.domain.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,15 +16,16 @@ public class Peep {
     public UUID id;
     public String text;
     public Date date;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("peeps")
     public User owner;
+
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "like_user_id")
-    public Set<User> likes;
+    public List<User> likes;
+
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reporter_user_id")
-    public Set<User> reporters;
+    public List<User> reporters;
 
     public Peep() {}
 

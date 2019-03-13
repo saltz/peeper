@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dane</groupId>
     <artifactId>peeper</artifactId>
-    <version>1.1.2-tagging</version>
+    <version>1.1.3</version>
     <name>peeper</name>
     <description>The better twitter spin off</description>
     <packaging>jar</packaging>
@@ -63,10 +63,10 @@
             <version>2.9.2</version>
         </dependency>
         <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>2.3.2</version>
-        </dependency>
+        <groupId>org.modelmapper</groupId>
+        <artifactId>modelmapper</artifactId>
+        <version>2.3.2</version>
+    </dependency>
     </dependencies>
 
     <build>
