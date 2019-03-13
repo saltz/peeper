@@ -1,4 +1,4 @@
-#!groovy​
+#!groovy
 @Library('main_shared') _
 
 String docker_repo = 'saltz'
