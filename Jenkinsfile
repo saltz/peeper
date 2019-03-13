@@ -1,4 +1,8 @@
 #!groovy​
 @Library('main_shared') _
 
-defaultDockerDeploy("saltz", "peeper")
+String docker_repo = 'saltz'
+String project = 'peeper'
+String type = 'maven'
+
+mavenBuildAndDeploy(docker_repo, project, type)
