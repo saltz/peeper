@@ -1,4 +1,4 @@
-package com.dane.peeper.controllers;
+package com.dane.peeper.controllers.v1;
 
 import com.dane.peeper.domain.extensions.BindingResultExtension;
 import com.dane.peeper.domain.models.entities.User;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "users")
+@RequestMapping(path = "v1/users")
 public class UserController {
 
     private final IUserService service;
