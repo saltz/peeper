@@ -1,6 +1,6 @@
 package com.dane.peeper.controllers.concrete;
 
-import com.dane.peeper.controllers.UserController;
+import com.dane.peeper.controllers.v1.UserController;
 import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.services.interfaces.IUserService;
 import com.dane.peeper.utils.ModelUtilities;
@@ -45,7 +45,7 @@ public class UserControllerTest {
 
         given(service.findAll()).willReturn(users);
 
-        mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/v1/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
