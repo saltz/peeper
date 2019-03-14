@@ -45,7 +45,7 @@ public class UserControllerTest {
 
         given(service.findAll()).willReturn(users);
 
-        mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/v1/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
