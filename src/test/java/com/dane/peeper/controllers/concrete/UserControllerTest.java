@@ -1,6 +1,6 @@
 package com.dane.peeper.controllers.concrete;
 
-import com.dane.peeper.controllers.UserController;
+import com.dane.peeper.controllers.v1.UserController;
 import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.services.interfaces.IUserService;
 import com.dane.peeper.utils.ModelUtilities;
