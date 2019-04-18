@@ -1,4 +1,4 @@
-package com.dane.peeper.domain.services.concrete;
+package com.dane.peeper.domain.services.concretes;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
 import com.dane.peeper.domain.exceptions.InvalidRelationException;
@@ -7,6 +7,7 @@ import com.dane.peeper.domain.exceptions.UserNotFoundException;
 import com.dane.peeper.domain.models.entities.User;
 import com.dane.peeper.domain.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +17,12 @@ import java.util.UUID;
 public class UserService implements IUserService {
 
     private final IUserRepository repository;
+    private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UserService(IUserRepository repository) {
+    public UserService(IUserRepository repository, BCryptPasswordEncoder encoder) {
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     @Override
@@ -34,6 +37,7 @@ public class UserService implements IUserService {
 
     @Override
     public User create(User object) {
+        object.hash = encoder.encode(object.hash);
         return repository.save(object);
     }
 
@@ -57,6 +61,11 @@ public class UserService implements IUserService {
     public List<User> getFollowing(UUID id) throws Exception {
         User user = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
         return user.following;
+    }
+
+    @Override
+    public User findUserByEmail(String email) throws Exception {
+        return repository.findByEmail(email).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied email")));
     }
 
     @Override
