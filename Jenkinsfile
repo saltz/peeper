@@ -1,8 +1,13 @@
 #!groovy
 @Library('main_shared') _
 
-String docker_repo = 'saltz'
-String project = 'peeper'
-String type = 'maven'
+Map projectSettings = [
+    repo: "saltz"
+    name: "peeper"
+]
 
-mavenBuildAndDeploy(docker_repo, project, type)
+Map sonarSettings = [
+    key: "blockr-data-access"
+]
+
+mavenBuildAndDeploy(projectSettings, sonarSettings)
