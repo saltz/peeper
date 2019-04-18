@@ -1,14 +1,15 @@
 package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
-import com.dane.peeper.domain.exceptions.InvalidRelationException;
 import com.dane.peeper.domain.models.entities.User;
+import com.dane.peeper.domain.services.concretes.UserService;
 import com.dane.peeper.utils.ModelUtilities;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.*;
 
@@ -23,6 +24,8 @@ public class UserServiceTest {
 
     @Mock
     private IUserRepository repository;
+    @Mock
+    private BCryptPasswordEncoder encoder;
 
     @Before
     public void setUp() {
@@ -57,6 +60,7 @@ public class UserServiceTest {
     public void create() {
         User user = ModelUtilities.createFakeUser(UUID.randomUUID());
 
+        when(encoder.encode(user.hash)).thenReturn(user.hash);
         when(repository.save(user)).thenReturn(user);
 
         User result = service.create(user);

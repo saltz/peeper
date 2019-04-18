@@ -1,4 +1,4 @@
-package com.dane.peeper.domain.services.concrete;
+package com.dane.peeper.domain.services.concretes;
 
 import com.dane.peeper.data.repositories.interfaces.IPeepRepository;
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
