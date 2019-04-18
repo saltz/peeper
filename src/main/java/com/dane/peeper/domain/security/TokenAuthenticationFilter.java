@@ -34,13 +34,13 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        TokenRequestModel credentials = null;
+        TokenRequestModel credentials = new TokenRequestModel();
 
         try {
             credentials = new ObjectMapper()
                     .readValue(request.getInputStream(), TokenRequestModel.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            // This exception will never occur
         }
 
         return authManager.authenticate(
