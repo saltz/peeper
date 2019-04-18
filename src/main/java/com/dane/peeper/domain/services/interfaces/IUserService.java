@@ -28,6 +28,14 @@ public interface IUserService extends IBaseService<User> {
     List<User> getFollowing(UUID id) throws Exception;
 
     /**
+     * Get user by email
+     * @param email the email of the user
+     * @return user
+     * @throws Exception if the user is not found
+     */
+    User findUserByEmail(String email) throws Exception;
+
+    /**
      * Follow a user
      *
      * @param id       of the user that will follow

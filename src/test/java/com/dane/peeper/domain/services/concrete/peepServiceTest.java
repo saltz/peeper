@@ -3,6 +3,7 @@ package com.dane.peeper.domain.services.concrete;
 import com.dane.peeper.data.repositories.interfaces.IPeepRepository;
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
 import com.dane.peeper.domain.models.entities.Peep;
+import com.dane.peeper.domain.services.concretes.PeepService;
 import com.dane.peeper.utils.ModelUtilities;
 import org.junit.Assert;
 import org.junit.Before;
