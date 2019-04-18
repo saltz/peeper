@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.UUID;
 
-public interface IPeepRepository extends CrudRepository<Peep, UUID>, JpaSpecificationExecutor<Peep> {
+public interface IPeepRepository extends CrudRepository<Peep, UUID> {
     List<Peep> findAllByOwnerId(UUID id);
 }
