@@ -2,7 +2,7 @@
 @Library('main_shared') _
 
 Map projectSettings = [
-    repo: "saltz"
+    repo: "saltz",
     name: "peeper"
 ]
 
