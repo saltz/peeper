@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -44,6 +47,25 @@ public class UserService implements IUserService {
     @Override
     public User hardUpdate(User object) {
         return repository.save(object);
+    }
+
+    @Override
+    public User softUpdate(UUID id, User update) throws Exception {
+        User current = repository.findById(id).orElseThrow(() -> (new UserNotFoundException("no user exists with the supplied id")));
+
+        Field[] fields = update.getClass().getFields();
+
+        for(Field field : fields) {
+            Object value = field.get(update);
+
+            if (value != null) {
+                field.set(current, value);
+            }
+        }
+
+        repository.save(current);
+
+        return current;
     }
 
     @Override

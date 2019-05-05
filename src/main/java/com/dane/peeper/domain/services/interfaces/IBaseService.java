@@ -1,6 +1,9 @@
 package com.dane.peeper.domain.services.interfaces;
 
+import com.dane.peeper.domain.exceptions.UserNotFoundException;
+
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,6 +37,8 @@ public interface IBaseService<C> {
      * @return the saved instance of the type
      */
     C hardUpdate(C object);
+
+    C softUpdate(UUID id, C update) throws UserNotFoundException, Exception;
 
     /**
      * Delete object by id

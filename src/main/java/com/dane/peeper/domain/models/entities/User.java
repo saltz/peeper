@@ -15,11 +15,12 @@ public class User {
     public String alias;
     public String firstName;
     public String lastName;
+    @Column(unique = true)
     public String email;
     public String hash;
     public String biography;
     public String website;
-    public Byte[] picture;
+    public String picture;
     public UserRole role;
 
     @OneToOne

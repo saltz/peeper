@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout}" lang="en">
+<head>
+    <title>Peeper | admin users</title>
+</head>
+<body>
+    <div layout:fragment="content" class="container">
+        <div class="row" style="margin-bottom: 5vw">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+                <div class="container">
+                    <a class="navbar-brand" href="#">Peeper</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/dashboard">Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/admin-users">Users
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/admin-peeps">Peeps
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="row mt-3 mb-3">
+            <h2>Users</h2>
+        </div>
+        <div class="row ">
+            <div class="col-xl-3 col-md-6 mb-4" th:each="user : ${users}">
+                <div class="card border-0 shadow">
+                    <img th:src="*{user.picture}" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0" th:text="*{user.alias}"></h5>
+                        <div class="card-text text-black-50" th:text="*{user.firstName} + ' ' + *{user.lastName}"></div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#id' + *{user.id}">Info</button>
+                </div>
+                <div class="modal fade" th:id="'id' + *{user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" th:text="User + ' ' + *{user.firstName} + ' ' + *{user.lastName}"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" id="user-update-form">
+                                    <input name="id" hidden type="text" th:value="*{user.id}">
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Alias</label>
+                                        <div class="col-lg-9">
+                                            <input name="alias" class="form-control" type="text" th:value="*{user.alias}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                                        <div class="col-lg-9">
+                                            <input name="first_name" class="form-control" type="text" th:value="*{user.firstName}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                                        <div class="col-lg-9">
+                                            <input name="last_name" class="form-control" type="text" th:value="*{user.lastName}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                                        <div class="col-lg-9">
+                                            <input name="email" class="form-control" type="email" th:value="*{user.email}"readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Biography</label>
+                                        <div class="col-lg-9">
+                                            <textarea name="biography" rows="3" class="form-control" type="text" th:text="*{user.biography}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Website</label>
+                                        <div class="col-lg-9">
+                                            <input name="website" class="form-control" type="url" th:value="*{user.website}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Picture URL</label>
+                                        <div class="col-lg-9">
+                                            <input name="picture" class="form-control" type="url" th:value="*{user.picture}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Role</label>
+                                        <div class="col-lg-9">
+                                            <input name="user_role" class="form-control" type="text" th:value="*{user.role}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                                        <div class="col-lg-9">
+                                            <input type="submit" class="btn btn-primary" value="Update info" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script lang="js">
+            $(document).delegate('#user-update-form', 'submit', function(e) {
+                let data = $(this).serializeFormJSON();
+                console.log(data);
+                e.preventDefault();
+                e.stopPropagation();
+                $.ajax({
+                    url: '/v1/users/' + data.id,
+                    type: 'PATCH',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log(response);
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            (function ($) {
+                $.fn.serializeFormJSON = function () {
+                    var o = {};
+                    var a = this.serializeArray();
+                    $.each(a, function () {
+                        if (o[this.name]) {
+                            if (!o[this.name].push) {
+                                o[this.name] = [o[this.name]];
+                            }
+                            o[this.name].push(this.value || '');
+                        } else {
+                            o[this.name] = this.value || '';
+                        }
+                    });
+                    return o;
+                };
+            })(jQuery);
+        </script>
+    </div>
+</body>
