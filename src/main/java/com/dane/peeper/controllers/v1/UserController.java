@@ -53,13 +53,10 @@ public class UserController {
         return new ResponseEntity<>(mapper.map(service.create(mapper.map(user, User.class)), UserViewModel.class), HttpStatus.CREATED);
     }
 
-    @PutMapping(produces = "application/json", consumes = "application/json")
+    @PatchMapping(path = "{id}", produces = "application/json", consumes = "application/json")
     public @ResponseBody
-    HttpEntity hardUpdate(@RequestBody @Valid UserRequestModel user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(BindingResultExtension.returnBindingErrorMessages(bindingResult), HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(mapper.map(service.create(mapper.map(user, User.class)), UserViewModel.class), HttpStatus.OK);
+    HttpEntity hardUpdate(@PathVariable UUID id, @RequestBody UserRequestModel user) throws Exception {
+        return new ResponseEntity<>(mapper.map(service.softUpdate(id, mapper.map(user, User.class)), UserViewModel.class), HttpStatus.OK);
     }
 
 

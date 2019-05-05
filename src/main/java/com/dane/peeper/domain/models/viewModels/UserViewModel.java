@@ -17,6 +17,6 @@ public class UserViewModel {
     public String email;
     public String biography;
     public String website;
-    public Byte[] picture;
+    public String picture;
     public UserRole role;
 }
