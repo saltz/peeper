@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+@RestController("user_controller_v1.0")
 @RequestMapping(path = "v1/users")
 public class UserController {
 
