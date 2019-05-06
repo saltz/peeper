@@ -31,12 +31,12 @@ public class AdminViewController {
 
     @GetMapping("/admin")
     public String getAdminView() {
-        return "admin-login";
+        return "admin/login";
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/admin/dashboard")
     public ModelAndView getDashboard() {
-        ModelAndView mav = new ModelAndView("dashboard");
+        ModelAndView mav = new ModelAndView("admin/dashboard");
 
         DashboardViewModel data = new DashboardViewModel();
         data.userAmount = userService.findAll().size();
@@ -47,26 +47,26 @@ public class AdminViewController {
         return mav;
     }
 
-    @GetMapping("/admin-users")
+    @GetMapping("/admin/users")
     public ModelAndView getAdminUsers() {
-        ModelAndView mav = new ModelAndView("admin-users");
+        ModelAndView mav = new ModelAndView("admin/users");
         mav.addObject("users", mapper.map(userService.findAll(), new TypeToken<List<UserViewModel>>() {
         }.getType()));
 
         return mav;
     }
 
-    @GetMapping("/admin-users/{id}")
+    @GetMapping("/admin/users/{id}")
     public ModelAndView getAdminUser(@PathVariable UUID id) throws Exception {
-        ModelAndView mav = new ModelAndView("admin-users");
+        ModelAndView mav = new ModelAndView("admin/users");
         mav.addObject("users", mapper.map(userService.findById(id), UserViewModel.class));
 
         return mav;
     }
 
-    @GetMapping("/admin-peeps")
+    @GetMapping("/admin/peeps")
     public ModelAndView getAdminPeeps() {
-        ModelAndView mav = new ModelAndView("admin-peeps");
+        ModelAndView mav = new ModelAndView("admin/peeps");
         mav.addObject("peeps", mapper.map(peepService.findAll(), new TypeToken<List<PeepViewModel>>(){}.getType()));
 
         return mav;

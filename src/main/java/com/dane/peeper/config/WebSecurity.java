@@ -32,7 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/admin").permitAll()
                 .usernameParameter("username").passwordParameter("password")
-                .defaultSuccessUrl("/dashboard", true)
+                .defaultSuccessUrl("/admin/dashboard", true)
                 .failureUrl("/admin?failure=true")
                 .and()
                 .logout()
@@ -50,7 +50,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/token").permitAll()
-                .antMatchers("/dashboard").hasAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated();
     }
 
