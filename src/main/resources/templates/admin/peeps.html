@@ -2,7 +2,7 @@
 <html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{fragments/layout}" lang="en">
 <head>
-    <title>Peeper | admin dashboard</title>
+    <title>Peeper | admin peeps</title>
 </head>
 <body>
     <div layout:fragment="content" class="container">
@@ -16,16 +16,20 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/dashboard">Dashboard
+                                <a class="nav-link" href="/admin/dashboard">Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/admin/users">Users
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/admin/peeps">Peeps
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="/admin-users">Users
-                                </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/admin-peeps">Peeps
+                                <a class="nav-link" href="/logout">Logout
                                 </a>
                             </li>
                         </ul>
@@ -34,28 +38,17 @@
             </nav>
         </div>
         <div class="row mt-3 mb-3">
-            <h2>Dashboard</h2>
+            <h2>Peeps</h2>
         </div>
         <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-0 shadow">
-                    <a href="#"><img class="card-img-top" src="https://i.imgur.com/qKpXtCV.png" alt=""></a>
-                    <div class="card-body text-center">
+            <div class="col-lg-4 col-sm-6 mb-4" th:each="peep : ${peeps}">
+                <div class="card h-100">
+                    <div class="card-body">
                         <h4 class="card-title">
-                            <a href="/admin-users">Users</a>
+                            <a th:text="*{peep.owner.alias}" th:href="'/admin/users/' + *{peep.owner.id}"></a>
                         </h4>
-                        <p class="card-text" th:text="'Amount of users : ' + *{data.userAmount}"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-0 shadow">
-                    <a href="#"><img class="card-img-top" src="https://i.imgur.com/VyQId8B.png" alt=""></a>
-                    <div class="card-body text-center">
-                        <h4 class="card-title">
-                            <a href="/admin-peeps">Peeps</a>
-                        </h4>
-                        <p class="card-text" th:text="'Amount of peeps : ' + *{data.peepAmount}"></p>
+                        <p class="card-text" th:text="*{peep.date}"></p>
+                        <p class="card-text" th:text="*{peep.text}"></p>
                     </div>
                 </div>
             </div>

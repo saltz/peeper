@@ -123,6 +123,9 @@
                                             <input type="checkbox" class="custom-control-input" id="customCheck1">
                                             <label class="custom-control-label" for="customCheck1">Remember password</label>
                                         </div>
+                                        <div class="alert alert-danger" role="alert" th:if="${(param.failure != null) and (param.failure[0] == 'true')}" id="error-message">
+                                            <strong>Login Error!</strong> Invalid username or password.
+                                        </div>
                                         <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
                                         <div class="text-center">
                                             <a class="small" href="#">Forgot password?</a></div>
@@ -133,6 +136,11 @@
                     </div>
                 </div>
             </div>
+            <script>
+                $( document ).ready(function() {
+                    $("#error-message").delay(5000).hide('slow');
+                });
+            </script>
         </div>
     </body>
 </html>
