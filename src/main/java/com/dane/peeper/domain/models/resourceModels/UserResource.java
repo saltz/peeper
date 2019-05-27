@@ -22,9 +22,9 @@ public class UserResource extends ResourceSupport {
 
         final UUID id = user.id;
 
-        add(linkTo(methodOn(com.dane.peeper.controllers.v1.UserController.class).getById(id)).withSelfRel());
-        add(linkTo(methodOn(PeepController.class).getAllUserPeeps(id)).withRel("peeps"));
-        add(linkTo(methodOn(com.dane.peeper.controllers.v1.UserController.class).getFollowers(id)).withRel("followers"));
-        add(linkTo(methodOn(com.dane.peeper.controllers.v1.UserController.class).getFollowing(id)).withRel("following"));
+        add(linkTo(methodOn(com.dane.peeper.controllers.v1_1.UserController.class).getById(id)).withSelfRel());
+        add(linkTo(methodOn(com.dane.peeper.controllers.v1_1.PeepController.class).getAllUserPeeps(id)).withRel("peeps"));
+        add(linkTo(methodOn(com.dane.peeper.controllers.v1_1.UserController.class).getFollowers(id)).withRel("followers"));
+        add(linkTo(methodOn(com.dane.peeper.controllers.v1_1.UserController.class).getFollowing(id)).withRel("following"));
     }
 }

@@ -55,7 +55,11 @@ public class UserController {
 
     @PatchMapping(path = "{id}", produces = "application/json", consumes = "application/json")
     public @ResponseBody
-    HttpEntity hardUpdate(@PathVariable UUID id, @RequestBody UserRequestModel user) throws Exception {
+    HttpEntity update(@PathVariable UUID id, @Valid @RequestBody UserRequestModel user, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(BindingResultExtension.returnBindingErrorMessages(bindingResult), HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(mapper.map(service.softUpdate(id, mapper.map(user, User.class)), UserViewModel.class), HttpStatus.OK);
     }
 

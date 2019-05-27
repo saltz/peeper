@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dane</groupId>
-    <artifactId>peeper</artifactId>
+    <artifactId>peeper-api</artifactId>
     <version>1.4.0</version>
-    <name>peeper</name>
+    <name>Peeper API</name>
     <description>The better twitter spin off</description>
     <packaging>jar</packaging>
 
