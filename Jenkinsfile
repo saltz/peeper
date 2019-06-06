@@ -1,13 +1,12 @@
 #!groovy
 @Library('main_shared') _
 
-Map projectSettings = [
-    repo: "saltz",
-    name: "peeper"
+String organization = 'saltz'
+String repo = 'peeper-api'
+
+Map settings = [
+    sonar_key: 'peeper-api'
 ]
 
-Map sonarSettings = [
-    key: "blockr-data-access"
-]
 
-mavenBuildAndDeploy(projectSettings, sonarSettings)
+mavenBuildAndDeploy(organization, repo, settings)

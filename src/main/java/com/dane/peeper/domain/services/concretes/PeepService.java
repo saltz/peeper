@@ -47,6 +47,11 @@ public class PeepService implements IPeepService {
     }
 
     @Override
+    public Peep softUpdate(UUID id, Peep update) throws Exception {
+        return null;
+    }
+
+    @Override
     public void deleteById(UUID id) {
         //TODO validate weather its the owner or a admin
         peepRepository.deleteById(id);

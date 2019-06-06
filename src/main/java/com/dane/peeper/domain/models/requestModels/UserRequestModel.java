@@ -29,7 +29,7 @@ public class UserRequestModel {
     public String biography;
     @Size(max = 70, message = "website must be shorter then 70 characters")
     public String website;
-    public Byte[] picture;
+    public String picture;
     @NotNull(message = "user_role must not be null or empty")
     public UserRole userRole;
 }

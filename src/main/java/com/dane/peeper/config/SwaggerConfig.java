@@ -28,7 +28,7 @@ public class SwaggerConfig {
         return new ApiInfo(
                 "Peep API",
                 "",
-                "V1.0",
+                "V1.4.0",
                 "Terms of service",
                 new Contact("Dane Naebers", null, null),
                 "License of API", "API license URL", Collections.emptyList());

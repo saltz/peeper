@@ -51,19 +51,6 @@ public class PeepController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(path = "v1/peeps/{peepId}/like/{userId}")
-    public @ResponseBody
-    HttpEntity<PeepViewModel> likePeep(@PathVariable UUID peepId, @PathVariable UUID userId) throws Exception {
-        return new ResponseEntity<>(mapper.map(service.likePeep(peepId, userId), PeepViewModel.class), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping(path = "v1/peeps/{peepId}/like/{userId}")
-    public @ResponseBody
-    HttpEntity unLikePeep(@PathVariable UUID peepId, @PathVariable UUID userId) throws Exception {
-        service.unLikePeep(peepId, userId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
     @GetMapping(path = "v1/users/{userId}/peeps", produces = "application/json")
     public @ResponseBody
     HttpEntity<Iterable<PeepViewModel>> getAllUserPeeps(@PathVariable UUID userId) throws Exception {
@@ -79,5 +66,18 @@ public class PeepController {
             return new ResponseEntity<>(BindingResultExtension.returnBindingErrorMessages(bindingResult), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(mapper.map(service.createPeep(userId, mapper.map(peep, Peep.class)), PeepViewModel.class), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "v1/peeps/{peepId}/like/{userId}")
+    public @ResponseBody
+    HttpEntity<PeepViewModel> likePeep(@PathVariable UUID peepId, @PathVariable UUID userId) throws Exception {
+        return new ResponseEntity<>(mapper.map(service.likePeep(peepId, userId), PeepViewModel.class), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "v1/peeps/{peepId}/like/{userId}")
+    public @ResponseBody
+    HttpEntity unLikePeep(@PathVariable UUID peepId, @PathVariable UUID userId) throws Exception {
+        service.unLikePeep(peepId, userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
