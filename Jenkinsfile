@@ -1,7 +1,7 @@
 #!groovy
 @Library('main_shared') _
 
-String organization = 'saltrepositories'
+String organization = 'saltz'
 String repo = 'din-api'
 
 Map settings = [
