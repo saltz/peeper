@@ -4,6 +4,14 @@
     <head>
         <title>Peeper | admin login</title>
         <style>
+
+            #app-version {
+                float: right;
+                padding: 0;
+                margin: 0;
+                margin-top: -5%;
+            }
+
             :root {
                 --input-padding-x: 1.5rem;
                 --input-padding-y: 0.75rem;
@@ -134,6 +142,7 @@
                             </div>
                         </div>
                     </div>
+                    <p th:text="'version' + ' ' + ${version}" id="app-version"></p>
                 </div>
             </div>
             <script>
