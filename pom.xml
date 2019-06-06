@@ -10,8 +10,8 @@
     </parent>
     <groupId>com.dane</groupId>
     <artifactId>peeper-api</artifactId>
-    <version>1.5.0</version>
-    <name>Peeper API</name>
+    <version>1.6.0</version>
+    <name>PeeperAPI</name>
     <description>The better twitter spin off</description>
     <packaging>jar</packaging>
 

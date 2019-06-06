@@ -1,5 +1,6 @@
 package com.dane.peeper.controllers.viewControllers;
 
+import com.dane.peeper.PeeperApplication;
 import com.dane.peeper.domain.models.viewModels.DashboardViewModel;
 import com.dane.peeper.domain.models.viewModels.PeepViewModel;
 import com.dane.peeper.domain.models.viewModels.UserViewModel;
@@ -8,13 +9,18 @@ import com.dane.peeper.domain.services.interfaces.IUserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 @Controller
 public class AdminViewController {
@@ -22,11 +28,19 @@ public class AdminViewController {
     private final IUserService userService;
     private final IPeepService peepService;
 
+    @Value("${PeeperAPI.version}")
+    private String applicationVersion;
+
     @Autowired
     public AdminViewController(ModelMapper mapper, IUserService userService, IPeepService peepService) {
         this.mapper = mapper;
         this.userService = userService;
         this.peepService = peepService;
+    }
+
+    @ModelAttribute("version")
+    public String getVersion() {
+        return  applicationVersion;
     }
 
     @GetMapping("/admin")
