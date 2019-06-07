@@ -1,6 +1,5 @@
 package com.dane.peeper.domain.models.resourceModels;
 
-import com.dane.peeper.controllers.v1.PeepController;
 import com.dane.peeper.domain.models.viewModels.UserViewModel;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

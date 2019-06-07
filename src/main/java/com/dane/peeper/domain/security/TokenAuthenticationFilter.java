@@ -3,6 +3,7 @@ package com.dane.peeper.domain.security;
 import com.auth0.jwt.JWT;
 import com.dane.peeper.domain.models.requestModels.TokenRequestModel;
 import com.dane.peeper.domain.models.viewModels.TokenViewModel;
+import com.dane.peeper.domain.services.interfaces.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,9 +26,11 @@ import static com.dane.peeper.domain.security.TokenConstants.SECRET;
 
 public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authManager;
+    private final IUserService userService;
 
-    public TokenAuthenticationFilter(AuthenticationManager authManager) {
+    public TokenAuthenticationFilter(AuthenticationManager authManager, IUserService userService) {
         this.authManager = authManager;
+        this.userService = userService;
 
         setFilterProcessesUrl("/v1/token");
     }
@@ -53,10 +56,16 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException {
-        String token = JWT.create()
-                .withSubject(((User) auth.getPrincipal()).getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(HMAC512(SECRET.getBytes()));
+        String token = null;
+        try {
+            token = JWT.create()
+                    .withSubject(((User) auth.getPrincipal()).getUsername())
+                    .withClaim("Id", String.valueOf((this.userService.findUserByEmail(((User) auth.getPrincipal()).getUsername())).id))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                    .sign(HMAC512(SECRET.getBytes()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         res.setContentType("application/json");
         res.getWriter().write(new ObjectMapper().writeValueAsString(new TokenViewModel(token, EXPIRATION_TIME, "Bearer")));
