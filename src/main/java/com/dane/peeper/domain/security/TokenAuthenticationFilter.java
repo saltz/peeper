@@ -64,7 +64,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
                     .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                     .sign(HMAC512(SECRET.getBytes()));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
 
         res.setContentType("application/json");
