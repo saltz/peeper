@@ -3,6 +3,7 @@ package com.dane.peeper.config;
 import com.dane.peeper.domain.security.SecurityUserService;
 import com.dane.peeper.domain.security.TokenAuthenticationFilter;
 import com.dane.peeper.domain.security.TokenAuthorizationFilter;
+import com.dane.peeper.domain.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,11 +20,13 @@ import static com.dane.peeper.domain.security.TokenConstants.SIGN_UP_URL;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
     private SecurityUserService securityUserService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private IUserService userService;
 
     @Autowired
-    public WebSecurity(SecurityUserService securityUserService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurity(SecurityUserService securityUserService, BCryptPasswordEncoder bCryptPasswordEncoder, IUserService userService) {
         this.securityUserService = securityUserService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userService = userService;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/admin")
                 .and()
-                .addFilter(new TokenAuthenticationFilter(authenticationManagerBean()))
+                .addFilter(new TokenAuthenticationFilter(authenticationManagerBean(), userService))
                 .addFilterAfter(new TokenAuthorizationFilter(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()

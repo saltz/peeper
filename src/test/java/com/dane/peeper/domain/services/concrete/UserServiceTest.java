@@ -2,6 +2,7 @@ package com.dane.peeper.domain.services.concrete;
 
 import com.dane.peeper.data.repositories.interfaces.IUserRepository;
 import com.dane.peeper.domain.models.entities.User;
+import com.dane.peeper.domain.services.concretes.MailService;
 import com.dane.peeper.domain.services.concretes.UserService;
 import com.dane.peeper.utils.ModelUtilities;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -24,6 +26,8 @@ public class UserServiceTest {
 
     @Mock
     private IUserRepository repository;
+    @Mock
+    private MailService mailService;
     @Mock
     private BCryptPasswordEncoder encoder;
 
@@ -62,6 +66,7 @@ public class UserServiceTest {
 
         when(encoder.encode(user.hash)).thenReturn(user.hash);
         when(repository.save(user)).thenReturn(user);
+        doNothing().when(mailService).sendRegistrationEmail(user);
 
         User result = service.create(user);
 

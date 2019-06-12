@@ -20,11 +20,13 @@ import java.util.UUID;
 public class UserService implements IUserService {
 
     private final IUserRepository repository;
+    private final MailService mailService;
     private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UserService(IUserRepository repository, BCryptPasswordEncoder encoder) {
+    public UserService(IUserRepository repository, MailService mailService, BCryptPasswordEncoder encoder) {
         this.repository = repository;
+        this.mailService = mailService;
         this.encoder = encoder;
     }
 
@@ -41,6 +43,8 @@ public class UserService implements IUserService {
     @Override
     public User create(User object) {
         object.hash = encoder.encode(object.hash);
+        mailService.sendRegistrationEmail(object);
+
         return repository.save(object);
     }
 
